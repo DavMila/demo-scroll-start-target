@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <style>
+    .scroller {
+      height: 90vh;
+      width: 400px;
+      padding: 10px;
+      border: solid 1px black;
+      overflow-x: scroll;
+      display: block;
+      white-space: nowrap;
+      scroll-snap-type: x mandatory;
+    }
+
+    .default_drone {
+      scroll-start-target: auto auto;
+      border: solid 2px yellow !important;
+    }
+
+    .drone {
+      margin-left: 0px;
+      margin-top: 10px;
+      height: 80%;
+      width: 80%;
+      display: inline-block;
+      border: solid 1px blue;
+      scroll-snap-align: center;
+      padding: 10px;
+    }
+  </style>
+  <div class="scroller">
+    <div id="huey" class="drone">
+      <h3>Huey Maintenance Logs</h3>
+      <ul>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+      </ul>
+    </div>
+    <div id="dewey" class="drone">
+      <h3>Dewey Maintenance Logs</h3>
+      <ul>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+      </ul>
+    </div>
+    <div id="louie" class="drone">
+      <h3>Louie Maintenance Logs</h3>
+      <ul>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+        <li>...</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    window.onload = () => {
+      const test = document.createElement("div");
+      const supports = test.style.scrollStartTarget !== undefined;
+
+      const query = window.location.search;
+      const params = new URLSearchParams(query);
+      const drone_id = params.get("drone");
+
+      const drone = document.getElementById(drone_id);
+      if (drone) {
+        drone.classList.add("default_drone");
+        if (!supports) {
+          drone.scrollIntoView();
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

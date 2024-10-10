@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+  <body>
+    <style>
+      iframe {
+        height: 50vh;
+        width: 50vw;
+      }
+    </style>
+    <h1>This is a demo for scroll-start-target (adapted from mdn's
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">radio &lt;input/> example</a>).
+    </h1>
+    <div style="width: 50vw;">
+      <h2 id="support_notice">This browser _______ support scroll-start-target.</h2>
+      <fieldset>
+        <legend>Select your most important maintenance drone:</legend>
+        <div>
+          <input type="radio" id="huey" name="drone" value="huey" checked />
+          <label for="huey">Huey</label>
+        </div>
+      
+        <div>
+          <input type="radio" id="dewey" name="drone" value="dewey" />
+          <label for="dewey">Dewey</label>
+        </div>
+      
+        <div>
+          <input type="radio" id="louie" name="drone" value="louie" />
+          <label for="louie">Louie</label>
+        </div>
+      </fieldset>
+      <button onclick="Update()">Refresh Maintenance Page View</button><br>
+      <iframe id="frame" src="frame.html"></iframe>
+      <script>
+        window.onload = () => {
+          const test = document.createElement("div");
+          const supports = test.style.scrollStartTarget !== undefined;
+          const support_verb = supports ? "does" : "does not";
+          const support_notice = document.getElementById("support_notice");
+          support_notice.innerText =
+            `This browser ${support_verb} support scroll-start-target.` +
+            `${supports ? "" : " The demo relies on scrollIntoView"}`;
+        }
+
+        function Update() {
+          const frame = document.getElementById("frame");
+          frame.remove();
+
+          let target_drone = "";
+          const drones = document.querySelectorAll("input");
+          for (const drone of drones) {
+            if (drone.checked) {
+              target_drone = drone.id;
+            }
+          }
+
+          frame.src = `frame.html?drone=${target_drone}`;
+          document.body.appendChild(frame);
+        }
+      </script>
+    </div>
+  </body>
+</html>
