@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <style>
+      .gallery {
+        height: 600px;
+        width: 600px;
+        white-space: nowrap;
+        border: solid 1px black;
+        overflow-x: scroll;
+        place-content: center;
+        scroll-snap-type: x mandatory;
+        resize: both;
+        display: none;
+      }
+      .img {
+        height: 500px;
+        width: 500px;
+        margin: 10px;
+        margin-left: 25%;
+        margin-right: 25%;
+        display: inline-block;
+        scroll-snap-align: center;
+        border: solid 1px grey;
+      }
+      img {
+        height: 90%;
+        width: 90%;
+      }
+      .target {
+        scroll-start-target: auto;
+        scroll-start-target: auto auto; /* In case chrome version older than 131.0.6742.0 */
+        border: solid 1px turquoise;
+        background-color: turquoise
+      }
+    </style>
+    <div>
+      <h1>This is a demo for scroll-start-target</h1>
+      <div>
+        <h2 id="support_notice">This browser _______ support scroll-start-target.</h2>
+      </div>
+      <button onclick="hideGallery()">Hide Gallery</button>
+      <button onclick="showGallery()">Show Gallery</button>
+      <div class="gallery" id="gallery">
+        <div class="img"><img src="../images/Alberta.svg"/></div>
+        <div class="img"><img src="../images/BritishColumbia.svg"/></div>
+        <div class="img"><img src="../images/Manitoba.svg"/></div>
+        <div class="img"><img src="../images/NewBrunswick.svg"/></div>
+        <div class="img"><img src="../images/Newfoundland.svg"/></div>
+        <div class="img"><img src="../images/NorthwestTerritories.svg"/></div>
+        <div class="target img"><img src="../images/NovaScotia.svg"/></div>
+        <div class="img"><img src="../images/Nunavut.svg"/></div>
+        <div class="img"><img src="../images/Ontario.svg"/></div>
+        <div class="img"><img src="../images/PrinceEdwardIsland.svg"/></div>
+        <div class="img"><img src="../images/Quebec.svg"/></div>
+        <div class="img"><img src="../images/Saskatchewan.svg"/></div>
+        <div class="img"><img src="../images/Yukon.svg"/></div>
+      </div>
+    </div>
+    <script>
+      let browser_supports = false;
+      window.onload = () => {
+        const test = document.createElement("div");
+        const supports = test.style.scrollStartTarget !== undefined;
+        browser_supports = supports;
+        const support_verb = supports ? "does" : "does not";
+        const support_notice = document.getElementById("support_notice");
+        support_notice.innerText =
+          `This browser ${support_verb} support scroll-start-target.` +
+          `${supports ? "" : " The demo relies on scrollIntoView"}`;
+      }
+
+      function hideGallery() {
+        const gallery = document.getElementById("gallery");
+        gallery.style.display = "none";
+      }
+
+      function showGallery() {
+        const gallery = document.getElementById("gallery");
+        gallery.style.display = "block";
+
+        if (!browser_supports) {
+          const target_img = document.querySelector(".target");
+          target_img.scrollIntoView();
+        }
+      }
+      </script>
+  </body>
+</html>

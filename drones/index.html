@@ -32,7 +32,10 @@
           <label for="louie">Louie</label>
         </div>
       </fieldset>
-      <button onclick="Update()">Refresh Maintenance Page View</button><br>
+      <div style="white-space: nowrap;">
+        <div style="display: inline-block"><button onclick="Save()">Save</button><br></div>
+        <div style="display: inline-block"><button onclick="RefreshView()">Refresh Maintenance Page View</button><br></div>
+      </div>
       <iframe id="frame" src="frame.html"></iframe>
       <script>
         window.onload = () => {
@@ -45,21 +48,25 @@
             `${supports ? "" : " The demo relies on scrollIntoView"}`;
         }
 
-        function Update() {
+        let target_drone = "";
+
+        function RefreshView() {
           const frame = document.getElementById("frame");
           frame.remove();
 
-          let target_drone = "";
+          frame.src = `frame.html?drone=${target_drone}`;
+          document.body.appendChild(frame);
+        }
+
+        function Save() {
           const drones = document.querySelectorAll("input");
           for (const drone of drones) {
             if (drone.checked) {
               target_drone = drone.id;
             }
           }
-
-          frame.src = `frame.html?drone=${target_drone}`;
-          document.body.appendChild(frame);
         }
+
       </script>
     </div>
   </body>
