@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <style>
+
+      #todolistsurface {
+        border-radius: 5%;
+        width: 400px;
+        height: 400px;
+        display: grid;
+        place-content: space-evenly;
+        border: solid 5px grey;
+        font-family: sans-serif;
+        background-color: black;
+        color: white;
+        text-align: center;
+      }
+      #todolist {
+        scroll-snap-type: y mandatory;
+        overflow-y: scroll;
+        width: 350px;
+        height: 210px;
+        border: solid 1px grey;
+        justify-self: center;
+        box-shadow: -10px 10px 5px grey;
+      }
+      li {
+        border: solid 1px grey;
+        height: 100px;
+        width: 80%;
+        margin-bottom: 50px;
+        scroll-snap-align: center;
+        box-shadow: -5px 5px 3px grey;
+        text-align: center;
+        align-content: center;
+      }
+      .target {
+        /* Chrome bug means this isn't working as intended */
+        /* scroll-start-target: auto;
+        scroll-start-target: auto auto; */
+        background-color: lightblue;
+        border: 0px;
+      }
+      #info {
+        display: block;
+      }
+    </style>
+    <div id="todolistsurface">
+        <h3>TODO List Quick Review</h3>
+        <p>Click done (blue) items to remove from list.</p>
+      <div id="todolist">
+        <ul>
+          <li>CSS 101</li>
+          <li class="target">CSS 102</li>
+          <li>JS 101</li>
+          <li class="target">JS 102</li>
+          <li>CSS 103</li>
+          <li class="target">JS 103</li>
+          <li>HTML 200</li>
+        </ul>
+      </div>
+
+      <script>
+        let targets = [];
+        let removed = [];
+
+        function scrollToUnremovedTarget() {
+          for (const newtarget of targets) {
+            if (!removed.includes(newtarget)) {
+              newtarget.scrollIntoView();
+              break;
+            }
+          }
+        }
+        
+        window.onload = () => {
+          targets = document.querySelectorAll(".target");
+
+          for (const target of targets) {
+            target.onclick = (evt) => {
+              evt.target.remove();
+              removed.push(evt.target);
+
+              scrollToUnremovedTarget();
+            }
+          }
+
+          scrollToUnremovedTarget();
+        }
+      </script>
+    </div>
+  </body>
+</html>
