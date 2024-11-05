@@ -45,6 +45,14 @@
         display: block;
       }
     </style>
+    <h1>This is a demo for scroll-start-target</h1>
+    <div>
+      <h2 id="support_notice">This browser _______ support scroll-start-target.</h2>
+      <p> The blue boxes are the scroll-start-targets. <br>As they are removed from the DOM, the scroller'
+        default scroll position is changed to be the next scroll-start-target.<br>
+        After the scroller is manually scrolled, scroll-start-target becomes inactive.
+      </p>
+    </div>
     <div id="todolistsurface">
         <h3>TODO List Quick Review</h3>
         <p>Click done (blue) items to remove from list.</p>
@@ -74,6 +82,14 @@
         }
         
         window.onload = () => {
+          const test = document.createElement("div");
+          const supports = test.style.scrollStartTarget !== undefined;
+          browser_supports = supports;
+          const support_verb = supports ? "does" : "does not";
+          const support_notice = document.getElementById("support_notice");
+          support_notice.innerText =
+            `This browser ${support_verb} support scroll-start-target.` +
+            `${supports ? "" : " The demo relies on scrollIntoView"}`;
           targets = document.querySelectorAll(".target");
 
           for (const target of targets) {
